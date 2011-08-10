@@ -5,8 +5,8 @@
 '*****************************************************************
 
 '******************************************************
-'** Perform any startup/initialization stuff prior to 
-'** initially showing the screen.  
+'** Perform any startup/initialization stuff prior to
+'** initially showing the screen.
 '******************************************************
 Function preShowHomeScreen(breadA=invalid, breadB=invalid) As Object
 
@@ -28,7 +28,7 @@ End Function
 
 
 '******************************************************
-'** Display the home screen and wait for events from 
+'** Display the home screen and wait for events from
 '** the screen. The screen will show retreiving while
 '** we fetch and parse the feeds for the game posters
 '******************************************************
@@ -49,6 +49,7 @@ Function showHomeScreen(screen) As Integer
                 print "list focused | index = "; msg.GetIndex(); " | category = "; m.curCategory
             else if msg.isListItemSelected() then
                 print "list item selected | index = "; msg.GetIndex()
+                'doRegistration()
                 kid = m.Categories.Kids[msg.GetIndex()]
                 if kid.type = "special_category" then
                     displaySpecialCategoryScreen()
@@ -68,8 +69,8 @@ End Function
 
 '**********************************************************
 '** When a poster on the home screen is selected, we call
-'** this function passing an associative array with the 
-'** data for the selected show.  This data should be 
+'** this function passing an associative array with the
+'** data for the selected show.  This data should be
 '** sufficient for the show detail (springboard) to display
 '**********************************************************
 Function displayCategoryPosterScreen(category As Object) As Dynamic
