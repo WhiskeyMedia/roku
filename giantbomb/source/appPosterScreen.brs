@@ -87,6 +87,7 @@ Function displayShowDetailScreen(category as Object, showIndex as Integer) As In
     showIndex = showDetailScreen(screen, shows, showIndex)
 
     return showIndex
+
 End Function
 
 
@@ -101,17 +102,10 @@ Function getCategoryList(categories as Object) As Object
 
     categoryList = CreateObject("roArray", 100, true)
     for each category in categories.kids
-        print category.Title
         categoryList.Push(category)
     next
 
     return categoryList
-
-    'for each category in categories.kids
-        'print category.Title
-        'categoryNames.Push(category.Title)
-    'next
-
 
 End Function
 
