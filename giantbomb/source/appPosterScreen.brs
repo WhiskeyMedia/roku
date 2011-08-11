@@ -31,16 +31,17 @@ End Function
 '** the screen. The screen will show retreiving while
 '** we fetch and parse the feeds for the game posters
 '******************************************************
-Function showPosterScreen(screen As Object, category As Object) As Integer
+Function showPosterScreen(screen As Object) As Integer
 
     if validateParam(screen, "roPosterScreen", "showPosterScreen") = false return -1
-    if validateParam(category, "roAssociativeArray", "showPosterScreen") = false return -1
 
     m.curCategory = 0
     m.curShow     = 0
 
-    screen.SetListNames(getCategoryList(category))
-    screen.SetContentList(getShowsForCategoryItem(category, m.curCategory))
+    initCategoryList()
+    categoryList = getCategoryList(m.Categories)
+    screen.SetListNames(m.CategoryNames)
+    screen.SetContentList(getShowsForCategoryItem(categoryList[0]))
     screen.Show()
 
     while true
@@ -50,23 +51,26 @@ Function showPosterScreen(screen As Object, category As Object) As Integer
             if msg.isListFocused() then
                 m.curCategory = msg.GetIndex()
                 m.curShow = 0
+                'get the list of shows for the currently selected item
                 screen.SetFocusedListItem(m.curShow)
-                screen.SetContentList(getShowsForCategoryItem(category, m.curCategory))
-                print "list focused | current category = "; m.curCategory
+                screen.SetContentList(getShowsForCategoryItem(categoryList[msg.GetIndex()]))
+                print "list focused | current category = "; msg.GetIndex()
+            else if msg.isListItemFocused() then
+                print"list item focused | current show = "; msg.GetIndex()
             else if msg.isListItemSelected() then
+                'doRegistration()
                 m.curShow = msg.GetIndex()
                 print "list item selected | current show = "; m.curShow
-                m.curShow = displayShowDetailScreen(category, m.curShow)
+                displayShowDetailScreen(categoryList[m.curCategory], m.curShow)
                 screen.SetFocusedListItem(m.curShow)
-                print "list item updated  | new show = "; m.curShow
             else if msg.isScreenClosed() then
                 return -1
             end if
         end If
     end while
 
-
 End Function
+
 
 '**********************************************************
 '** When a poster on the home screen is selected, we call
@@ -78,7 +82,7 @@ Function displayShowDetailScreen(category as Object, showIndex as Integer) As In
 
     if validateParam(category, "roAssociativeArray", "displayShowDetailScreen") = false return -1
 
-    shows = getShowsForCategoryItem(category, m.curCategory)
+    shows = getShowsForCategoryItem(category)
     screen = preShowDetailScreen(category.Title)
     showIndex = showDetailScreen(screen, shows, showIndex)
 
@@ -91,22 +95,26 @@ End Function
 '** from the category feed tree, return an roArray containing
 '** the names of all of the sub categories in the list.
 '***************************************************************
-Function getCategoryList(topCategory As Object) As Object
+Function getCategoryList(categories as Object) As Object
 
-    if validateParam(topCategory, "roAssociativeArray", "getCategoryList") = false return -1
-
-    if type(topCategory) <> "roAssociativeArray" then
-        print "incorrect type passed to getCategoryList"
-        return -1
-    endif
+    if validateParam(categories, "roAssociativeArray", "getCategoryList") = false return invalid
 
     categoryList = CreateObject("roArray", 100, true)
-    for each subCategory in topCategory.Kids
-        categoryList.Push(subcategory.Title)
+    for each category in categories.kids
+        print category.Title
+        categoryList.Push(category)
     next
+
     return categoryList
 
+    'for each category in categories.kids
+        'print category.Title
+        'categoryNames.Push(category.Title)
+    'next
+
+
 End Function
+
 
 '********************************************************************
 '** Return the list of shows corresponding the currently selected
@@ -115,12 +123,29 @@ End Function
 '** displayed should be refreshed to corrrespond to the highlighted
 '** item.  This function returns the list of shows for that category
 '********************************************************************
-Function getShowsForCategoryItem(category As Object, item As Integer) As Object
+Function getShowsForCategoryItem(category As Object) As Object
 
     if validateParam(category, "roAssociativeArray", "getCategoryList") = false return invalid
 
     conn = InitShowFeedConnection(category)
     showList = conn.LoadShowFeed(conn)
     return showList
+
+End Function
+
+
+'************************************************************
+'** initialize the category tree.  We fetch a category list
+'** from the server, parse it into a hierarchy of nodes and
+'** then use this to build the home screen and pass to child
+'** screen in the heirarchy. Each node terminates at a list
+'** of content for the sub-category describing individual videos
+'************************************************************
+Function initCategoryList() As Void
+
+    conn = InitCategoryFeedConnection()
+
+    m.Categories = conn.LoadCategoryFeed(conn)
+    m.CategoryNames = conn.GetCategoryNames(m.Categories)
 
 End Function

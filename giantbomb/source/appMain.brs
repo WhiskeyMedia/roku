@@ -10,14 +10,14 @@ Sub Main()
     initTheme()
 
     'prepare the screen for display and get ready to begin
-    screen=preShowHomeScreen("", "")
+    screen=preShowPosterScreen("", "")
     if screen=invalid then
         print "unexpected error in preShowHomeScreen"
         return
     end if
 
     'set to go, time to get started
-    showHomeScreen(screen)
+    showPosterScreen(screen)
 
 End Sub
 
