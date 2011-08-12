@@ -129,8 +129,6 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
 
         item = init_show_feed_item()
 
-        if validstr(curShow.hd_url.GetText()) == true then
-
         'fetch all values from the xml for the current show
         item.hdImg            = validstr(curShow.image.super_url.GetText())
         item.sdImg            = validstr(curShow.image.super_url.GetText())
