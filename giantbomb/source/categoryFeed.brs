@@ -10,10 +10,12 @@
 '******************************************************
 Function InitCategoryFeedConnection() As Object
 
+    m.api_key = loadRegistrationToken()
+
     conn = CreateObject("roAssociativeArray")
 
     conn.UrlPrefix   = "http://api.giantbomb.com"
-    conn.UrlCategoryFeed = conn.UrlPrefix + "/video_types/?api_key=e5529a761ee3394ffbd237269966e9f53a4c7bf3"
+    conn.UrlCategoryFeed = conn.UrlPrefix + "/video_types/?api_key=" + m.api_key
 
     conn.Timer = CreateObject("roTimespan")
 
@@ -136,7 +138,7 @@ Function ParseCategoryNode(xml As Object) As dynamic
         o.Description = xml.deck.gettext()
         o.ShortDescriptionLine1 = xml.name.gettext()
         o.ShortDescriptionLine2 = xml.deck.gettext()
-        o.Feed = "http://api.giantbomb.com/videos/?api_key=e5529a761ee3394ffbd237269966e9f53a4c7bf3&video_type=" + xml.id.gettext() + "&sort=-publish_date"
+        o.Feed = "http://api.giantbomb.com/videos/?api_key=" + m.api_key + "&video_type=" + xml.id.gettext() + "&sort=-publish_date"
         o.SDPosterURL = xml@sd_img
         o.HDPosterURL = xml@hd_img
     elseif xml.GetName() = "categoryLeaf" then

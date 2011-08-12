@@ -17,6 +17,8 @@ Function InitShowFeedConnection(category As Object) As Object
 
     if validateParam(category, "roAssociativeArray", "initShowFeedConnection") = false return invalid
 
+    m.api_key = loadRegistrationToken()
+
     conn = CreateObject("roAssociativeArray")
     conn.UrlShowFeed  = category.feed
 
@@ -127,6 +129,8 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
 
         item = init_show_feed_item()
 
+        if validstr(curShow.hd_url.GetText()) == true then
+
         'fetch all values from the xml for the current show
         item.hdImg            = validstr(curShow.image.super_url.GetText())
         item.sdImg            = validstr(curShow.image.super_url.GetText())
@@ -145,6 +149,11 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
             item.StreamFormat = "mp4"
         endif
 
+        isHD = false
+        if len(validstr(curShow.hd_url.GetText())) > 0 then
+            isHD = true
+        endif
+
         'map xml attributes into screen specific variables
         item.ShortDescriptionLine1 = item.Title
         item.ShortDescriptionLine2 = item.Description
@@ -159,12 +168,12 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
         item.Description = item.Synopsis
 
         'Set Default screen values for items not in feed
-        item.HDBranded = false
-        item.IsHD = false
+        item.HDBranded = isHD
+        item.IsHD = isHD
         item.StarRating = "90"
         item.ContentType = "episode"
 
-        'media may be at multiple bitrates, so parse an build arrays
+        'media may be at multiple bitrates, so parse and build arrays
         'for idx = 0 to 4
             'e = curShow.media[idx]
             'if e  <> invalid then
@@ -174,14 +183,19 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
             'endif
         'next idx
 
-        url = validstr(curShow.url.GetText())
+        if isHD = true then
+            item.StreamBitrates.Push("3500")
+            item.StreamQualities.Push("HD")
+            item.StreamUrls.Push(validstr(curShow.hd_url.GetText() + '&api_key=' + m.api_key))
+        endif
+
         item.StreamBitrates.Push("1500")
         item.StreamQualities.Push("SD")
-        item.StreamUrls.Push("http://media.giantbomb.com/video/" + url.left(len(url) - 4) + "_1500.mp4")
+        item.StreamUrls.Push(validstr(curShow.high_url.GetText()))
 
         item.StreamBitrates.Push("700")
         item.StreamQualities.Push("SD")
-        item.StreamUrls.Push("http://media.giantbomb.com/video/" + url.left(len(url) - 4) + "_700.mp4")
+        item.StreamUrls.Push(validstr(curShow.low_url.GetText()))
 
         showCount = showCount + 1
         feed.Push(item)

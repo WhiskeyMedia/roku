@@ -277,7 +277,7 @@ End Function
 '******************************************************
 
 Function loadRegistrationToken() As dynamic
-    m.RegToken =  RegRead("RegToken", "Authentication")
+    m.RegToken = RegRead("RegToken", "Authentication")
     if m.RegToken = invalid then m.RegToken = ""
     return m.RegToken
 End Function
