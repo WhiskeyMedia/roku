@@ -152,13 +152,19 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
             isHD = true
         endif
 
+        date = validstr(curShow.publish_date.GetText())
+        month = mid(date, 6,2)
+        day = mid(date, 9,2)
+        year = left(date, 4)
+        item.ReleaseDate = month + "/" + day + "/" + year
+
         'map xml attributes into screen specific variables
         item.ShortDescriptionLine1 = item.Title
         item.ShortDescriptionLine2 = item.Description
         item.HDPosterUrl           = item.hdImg
         item.SDPosterUrl           = item.sdImg
 
-        item.Length = strtoi(item.Runtime)
+        'item.Length = strtoi(item.Runtime)
         item.Categories = CreateObject("roArray", 5, true)
         item.Categories.Push(item.Genre)
         item.Actors = CreateObject("roArray", 5, true)
@@ -168,7 +174,7 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
         'Set Default screen values for items not in feed
         item.HDBranded = isHD
         item.IsHD = isHD
-        item.StarRating = "90"
+        'item.StarRating = "90"
         item.ContentType = "episode"
 
         'media may be at multiple bitrates, so parse and build arrays
