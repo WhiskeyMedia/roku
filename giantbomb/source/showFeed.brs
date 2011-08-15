@@ -18,6 +18,10 @@ Function InitShowFeedConnection(category As Object) As Object
     if validateParam(category, "roAssociativeArray", "initShowFeedConnection") = false return invalid
 
     m.api_key = loadRegistrationToken()
+    if len(m.api_key) = 0 then
+        'Use default API key
+        m.api_key = "3353202b4c9af87523cab1184e471fd1c5be4def"
+    endif
 
     conn = CreateObject("roAssociativeArray")
     conn.UrlShowFeed  = category.feed
@@ -190,7 +194,7 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
         if isHD = true then
             item.StreamBitrates.Push("3500")
             item.StreamQualities.Push("HD")
-            item.StreamUrls.Push(validstr(curShow.hd_url.GetText() + '&api_key=' + m.api_key))
+            item.StreamUrls.Push(validstr(curShow.hd_url.GetText() + "&api_key=" + m.api_key))
         endif
 
         item.StreamBitrates.Push("1500")

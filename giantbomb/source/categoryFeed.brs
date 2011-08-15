@@ -11,6 +11,10 @@
 Function InitCategoryFeedConnection() As Object
 
     m.api_key = loadRegistrationToken()
+    if len(m.api_key) = 0 then
+        'Use default API key
+        m.api_key = "3353202b4c9af87523cab1184e471fd1c5be4def"
+    endif
 
     conn = CreateObject("roAssociativeArray")
 
