@@ -36,6 +36,8 @@ Function showDetailScreen(screen As Object, showList As Object, showIndex as Int
     remoteKeyLeft  = 4
     remoteKeyRight = 5
 
+    doRegistration()
+
     while true
         msg = wait(0, screen.GetMessagePort())
 

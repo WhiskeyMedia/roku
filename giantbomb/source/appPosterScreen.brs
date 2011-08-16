@@ -58,7 +58,6 @@ Function showPosterScreen(screen As Object) As Integer
             else if msg.isListItemFocused() then
                 print"list item focused | current show = "; msg.GetIndex()
             else if msg.isListItemSelected() then
-                doRegistration()
                 m.curShow = msg.GetIndex()
                 print "list item selected | current show = "; m.curShow
                 displayShowDetailScreen(categoryList[m.curCategory], m.curShow)
