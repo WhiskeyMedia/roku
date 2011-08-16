@@ -21,7 +21,7 @@ Function doRegistration() As Integer
    'Failure case: getRegResult_failure (always returns failure)
    'Success case: getRegResult_success (always returns success)
 
-    m.UrlBase         = "http://10.0.1.198:8000/roku"
+    m.UrlBase         = "http://10.0.1.193:8000/roku"
     m.UrlGetRegCode   = m.UrlBase + "/get-code"
     m.UrlGetRegResult = m.UrlBase + "/get-result"
     m.UrlWebSite      = "www.giantbomb.com/roku"
@@ -29,6 +29,11 @@ Function doRegistration() As Integer
     m.RegToken = loadRegistrationToken()
     if isLinked() then
         print "device already linked, skipping registration process"
+        'return 0
+    endif
+
+    if skip() then
+        print "skipping registration this session"
         return 0
     endif
 
@@ -79,7 +84,10 @@ Function doRegistration() As Integer
                             getNewCode = true
                             exit while
                         endif
-                        if msg.GetIndex() = 1 return 1
+                        if msg.GetIndex() = 1
+                            m.skip = true
+                            return 1
+                        endif
                     endif
                 endif
             end while
@@ -114,7 +122,7 @@ Function displayRegistrationScreen() As Object
     regscreen.SetRegistrationCode("retrieving code...")
     regscreen.AddParagraph("This screen will automatically update as soon as your activation completes")
     regscreen.AddButton(0, "Get a new code")
-    regscreen.AddButton(1, "Back")
+    regscreen.AddButton(1, "Skip for now")
     regscreen.Show()
 
     return regscreen
@@ -277,7 +285,7 @@ End Function
 '******************************************************
 
 Function loadRegistrationToken() As dynamic
-    m.RegToken =  RegRead("RegToken", "Authentication")
+    m.RegToken = RegRead("RegToken", "Authentication")
     if m.RegToken = invalid then m.RegToken = ""
     return m.RegToken
 End Function
@@ -294,6 +302,14 @@ End Sub
 Function isLinked() As Dynamic
     if Len(m.RegToken) > 0  then return true
     return false
+End Function
+
+Function skip() As Boolean
+    if m.skip = true then
+        return true
+    else
+        return false
+    endif
 End Function
 
 '******************************************************
