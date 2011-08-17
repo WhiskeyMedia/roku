@@ -93,6 +93,10 @@ Function load_category_feed(conn As Object) As Dynamic
 
     categories = xml.results.GetChildElements()
     print "number of categories: " + itostr(categories.Count())
+
+    o = MakeLatestCategory()
+    topNode.AddKid(o)
+
     for each e in categories
         o = ParseCategoryNode(e)
         if o <> invalid then
@@ -108,11 +112,34 @@ Function load_category_feed(conn As Object) As Dynamic
 
 End Function
 
+
 '******************************************************
 'MakeEmptyCatNode - use to create top node in the tree
 '******************************************************
 Function MakeEmptyCatNode() As Object
     return init_category_item()
+End Function
+
+
+'******************************************************
+'MakeLatestCategoryNode - use to create latest category
+'******************************************************
+Function MakeLatestCategory() As dynamic
+    o = init_category_item()
+
+    print "ParseCategoryNode: " + "Latest"
+
+    'parse the curent node to determine the type. everything except
+    'special categories are considered normal, others have unique types
+    print "category: " + "Latest" + " | " + "See all our latest stuff."
+    o.Type = "normal"
+    o.Title = "Latest"
+    o.Description = "See all our latest stuff."
+    o.ShortDescriptionLine1 = "Latest"
+    o.ShortDescriptionLine2 = "See all our latest stuff."
+    o.Feed = "http://api.giantbomb.com/videos/?api_key=e5529a761ee3394ffbd237269966e9f53a4c7bf3&sort=-publish_date"
+
+    return o
 End Function
 
 
