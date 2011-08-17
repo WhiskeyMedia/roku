@@ -13,7 +13,7 @@ Function InitCategoryFeedConnection() As Object
     m.api_key = loadRegistrationToken()
     if len(m.api_key) = 0 then
         'Use default API key
-        m.api_key = "3353202b4c9af87523cab1184e471fd1c5be4def"
+        m.api_key = "e5529a761ee3394ffbd237269966e9f53a4c7bf3"
     endif
 
     conn = CreateObject("roAssociativeArray")
@@ -143,7 +143,7 @@ Function MakeLatestCategory() As dynamic
     o.Description = "See all our latest stuff."
     o.ShortDescriptionLine1 = "Latest"
     o.ShortDescriptionLine2 = "See all our latest stuff."
-    o.Feed = "http://api.giantbomb.com/videos/?api_key=e5529a761ee3394ffbd237269966e9f53a4c7bf3&sort=-publish_date"
+    o.Feed = conn.UrlPrefix + "/videos/?api_key=" + m.api_key + "&sort=-publish_date"
 
     return o
 End Function
@@ -169,7 +169,7 @@ Function ParseCategoryNode(xml As Object) As dynamic
         o.Description = xml.deck.gettext()
         o.ShortDescriptionLine1 = xml.name.gettext()
         o.ShortDescriptionLine2 = xml.deck.gettext()
-        o.Feed = "http://api.giantbomb.com/videos/?api_key=" + m.api_key + "&video_type=" + xml.id.gettext() + "&sort=-publish_date"
+        o.Feed = conn.UrlPrefix + "/videos/?api_key=" + m.api_key + "&video_type=" + xml.id.gettext() + "&sort=-publish_date"
         o.SDPosterURL = xml@sd_img
         o.HDPosterURL = xml@hd_img
     elseif xml.GetName() = "categoryLeaf" then
