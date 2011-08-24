@@ -29,7 +29,7 @@ Function doRegistration() As Integer
     m.RegToken = loadRegistrationToken()
     if isLinked() then
         print "device already linked, skipping registration process"
-        'return 0
+        return 0
     endif
 
     if skip() then
