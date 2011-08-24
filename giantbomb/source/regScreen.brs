@@ -21,7 +21,7 @@ Function doRegistration() As Integer
    'Failure case: getRegResult_failure (always returns failure)
    'Success case: getRegResult_success (always returns success)
 
-    m.UrlBase         = "http://10.0.1.193:8000/roku"
+    m.UrlBase         = "http://www.giantbomb.com/roku"
     m.UrlGetRegCode   = m.UrlBase + "/get-code"
     m.UrlGetRegResult = m.UrlBase + "/get-result"
     m.UrlWebSite      = "www.giantbomb.com/roku"
