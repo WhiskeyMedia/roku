@@ -300,7 +300,8 @@ Sub deleteRegistrationToken()
 End Sub
 
 Function isLinked() As Dynamic
-    if Len(m.RegToken) > 0  then return true
+    if m.RegToken = invalid then m.RegToken = ""
+    if len(m.RegToken) > 0  then return true
     return false
 End Function
 

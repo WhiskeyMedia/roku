@@ -18,7 +18,8 @@ Function InitCategoryFeedConnection() As Object
 
     conn = CreateObject("roAssociativeArray")
 
-    conn.UrlPrefix   = "http://api.giantbomb.com"
+    conn.UrlPrefix = "http://api.giantbomb.com"
+    m.UrlPrefix = conn.UrlPrefix
     conn.UrlCategoryFeed = conn.UrlPrefix + "/video_types/?api_key=" + m.api_key
 
     conn.Timer = CreateObject("roTimespan")
@@ -86,6 +87,12 @@ Function load_category_feed(conn As Object) As Dynamic
         return invalid
     endif
 
+    if xml.status_code.gettext() = "100" then
+        print "invalid api key"
+        print "resetting to default key"
+        deleteRegistrationToken()
+    endif
+
     if xml.results.video_type[0].GetName() <> "video_type" then
         print "no initial category tag"
         return invalid
@@ -143,7 +150,8 @@ Function MakeLatestCategory() As dynamic
     o.Description = "See all our latest stuff."
     o.ShortDescriptionLine1 = "Latest"
     o.ShortDescriptionLine2 = "See all our latest stuff."
-    o.Feed = conn.UrlPrefix + "/videos/?api_key=" + m.api_key + "&sort=-publish_date"
+    o.Feed = m.UrlPrefix + "/videos/?api_key=" + m.api_key + "&sort=-publish_date"
+    o.Type = "normal"
 
     return o
 End Function
@@ -169,7 +177,7 @@ Function ParseCategoryNode(xml As Object) As dynamic
         o.Description = xml.deck.gettext()
         o.ShortDescriptionLine1 = xml.name.gettext()
         o.ShortDescriptionLine2 = xml.deck.gettext()
-        o.Feed = conn.UrlPrefix + "/videos/?api_key=" + m.api_key + "&video_type=" + xml.id.gettext() + "&sort=-publish_date"
+        o.Feed = m.UrlPrefix + "/videos/?api_key=" + m.api_key + "&video_type=" + xml.id.gettext() + "&sort=-publish_date"
         o.SDPosterURL = xml@sd_img
         o.HDPosterURL = xml@hd_img
     elseif xml.GetName() = "categoryLeaf" then

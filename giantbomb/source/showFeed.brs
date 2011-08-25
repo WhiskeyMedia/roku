@@ -124,6 +124,12 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
     showCount = 0
     showList = xml.results.GetChildElements()
 
+    api_key = loadRegistrationToken()
+    if len(api_key) = 0 then
+        'Use default API key
+        api_key = "59e6a05db7ba7939e828d3fe24062d373cb76b57"
+    endif
+
     for each curShow in showList
 
         'for now, don't process meta info about the feed size
@@ -194,7 +200,7 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
         if isHD = true then
             item.StreamBitrates.Push("3500")
             item.StreamQualities.Push("HD")
-            item.StreamUrls.Push(validstr(curShow.hd_url.GetText() + "&api_key=" + m.api_key))
+            item.StreamUrls.Push(validstr(curShow.hd_url.GetText()) + "&api_key=" + api_key)
         endif
 
         item.StreamBitrates.Push("1500")
