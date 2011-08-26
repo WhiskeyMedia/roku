@@ -43,7 +43,7 @@ End Function
 '******************************************************
 Function newShowFeed() As Object
 
-    o = CreateObject("roArray", 100, true)
+    o = CreateObject("roArray", 5, true)
     return o
 
 End Function
@@ -140,18 +140,18 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
         item = init_show_feed_item()
 
         'fetch all values from the xml for the current show
-        item.hdImg            = validstr(curShow.image.super_url.GetText())
-        item.sdImg            = validstr(curShow.image.super_url.GetText())
+        item.hdImg            = validstr(curShow.image.screen_url.GetText())
+        item.sdImg            = validstr(curShow.image.screen_url.GetText())
         item.ContentId        = validstr(curShow.id.GetText())
         item.Title            = validstr(curShow.name.GetText())
         item.Description      = validstr(curShow.deck.GetText())
-        item.ContentType      = validstr(curShow.contentType.GetText())
-        item.ContentQuality   = validstr(curShow.contentQuality.GetText())
+        'item.ContentType      = validstr(curShow.contentType.GetText())
+        'item.ContentQuality   = validstr(curShow.contentQuality.GetText())
         item.Synopsis         = validstr(curShow.deck.GetText())
-        item.Genre            = validstr(curShow.genres.GetText())
-        item.Runtime          = validstr(curShow.runtime.GetText())
-        item.HDBifUrl         = validstr(curShow.hdBifUrl.GetText())
-        item.SDBifUrl         = validstr(curShow.sdBifUrl.GetText())
+        'item.Genre            = validstr(curShow.genres.GetText())
+        'item.Runtime          = validstr(curShow.runtime.GetText())
+        'item.HDBifUrl         = validstr(curShow.hd_url.GetText())
+        'item.SDBifUrl         = validstr(curShow.sdBifUrl.GetText())
         item.StreamFormat     = validstr(curShow.streamFormat.GetText())
         if item.StreamFormat  = "" then  'set default streamFormat to mp4 if doesn't exist in xml
             item.StreamFormat = "mp4"
@@ -175,11 +175,11 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
         item.SDPosterUrl           = item.sdImg
 
         'item.Length = strtoi(item.Runtime)
-        item.Categories = CreateObject("roArray", 5, true)
-        item.Categories.Push(item.Genre)
-        item.Actors = CreateObject("roArray", 5, true)
-        item.Actors.Push(item.Genre)
-        item.Description = item.Synopsis
+        'item.Categories = CreateObject("roArray", 5, true)
+        'item.Categories.Push(item.Genre)
+        'item.Actors = CreateObject("roArray", 5, true)
+        'item.Actors.Push(item.Genre)
+        'item.Description = item.Synopsis
 
         'Set Default screen values for items not in feed
         item.HDBranded = isHD
@@ -198,16 +198,16 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
         'next idx
 
         if isHD = true then
-            item.StreamBitrates.Push("3500")
+            item.StreamBitrates.Push(3500)
             item.StreamQualities.Push("HD")
             item.StreamUrls.Push(validstr(curShow.hd_url.GetText()) + "&api_key=" + api_key)
         endif
 
-        item.StreamBitrates.Push("1500")
+        item.StreamBitrates.Push(1500)
         item.StreamQualities.Push("SD")
         item.StreamUrls.Push(validstr(curShow.high_url.GetText()))
 
-        item.StreamBitrates.Push("700")
+        item.StreamBitrates.Push(700)
         item.StreamQualities.Push("SD")
         item.StreamUrls.Push(validstr(curShow.low_url.GetText()))
 

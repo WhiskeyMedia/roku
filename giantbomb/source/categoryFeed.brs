@@ -71,7 +71,7 @@ Function load_category_feed(conn As Object) As Dynamic
     m.Timer.Mark()
     xml=CreateObject("roXMLElement")
     if not xml.Parse(rsp) then
-         print "Can't parse feed"
+        print "Can't parse feed"
         return invalid
     endif
     Dbg("Parse Took: ", m.Timer)
@@ -150,7 +150,7 @@ Function MakeLatestCategory() As dynamic
     o.Description = "See all our latest stuff."
     o.ShortDescriptionLine1 = "Latest"
     o.ShortDescriptionLine2 = "See all our latest stuff."
-    o.Feed = m.UrlPrefix + "/videos/?api_key=" + m.api_key + "&sort=-publish_date"
+    o.Feed = m.UrlPrefix + "/videos/?api_key=" + m.api_key + "&sort=-publish_date&field_list=name,deck,id,image,low_url,high_url,hd_url,publish_date"
     o.Type = "normal"
 
     return o
@@ -177,9 +177,9 @@ Function ParseCategoryNode(xml As Object) As dynamic
         o.Description = xml.deck.gettext()
         o.ShortDescriptionLine1 = xml.name.gettext()
         o.ShortDescriptionLine2 = xml.deck.gettext()
-        o.Feed = m.UrlPrefix + "/videos/?api_key=" + m.api_key + "&video_type=" + xml.id.gettext() + "&sort=-publish_date"
-        o.SDPosterURL = xml@sd_img
-        o.HDPosterURL = xml@hd_img
+        o.Feed = m.UrlPrefix + "/videos/?api_key=" + m.api_key + "&video_type=" + xml.id.gettext() + "&sort=-publish_date&field_list=name,deck,id,image,low_url,high_url,hd_url,publish_date"
+        'o.SDPosterURL = xml@sd_img
+        'o.HDPosterURL = xml@hd_img
     elseif xml.GetName() = "categoryLeaf" then
         o.Type = "normal"
     elseif xml.GetName() = "specialCategory" then
@@ -256,7 +256,7 @@ Function init_category_item() As Object
     o.Title       = ""
     o.Type        = "normal"
     o.Description = ""
-    o.Kids        = CreateObject("roArray", 100, true)
+    o.Kids        = CreateObject("roArray", 5, true)
     o.Parent      = invalid
     o.Feed        = ""
     o.IsLeaf      = cn_is_leaf

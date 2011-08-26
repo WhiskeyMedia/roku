@@ -20,16 +20,26 @@ Function showVideoScreen(episode As Object)
         return -1
     endif
 
+    if episode.isHD = true then
+        hd_url = strReplace(episode.streamurls[0], "download=1", "format=xml")
+        hd_http = NewHttp(hd_url)
+        hd_rsp = hd_http.GetToStringWithRetry()
+        hd_xml = CreateObject("roXMLElement")
+        hd_xml.Parse(hd_rsp)
+        episode.streamurls[0] = validstr(hd_xml.url.GetText())
+    endif
+
     port = CreateObject("roMessagePort")
     screen = CreateObject("roVideoScreen")
     screen.SetMessagePort(port)
 
     screen.Show()
     screen.SetPositionNotificationPeriod(30)
+
     screen.SetContent(episode)
     screen.Show()
 
-    'Uncomment his line to dump the contents of the episode to be played
+    'Uncomment this line to dump the contents of the episode to be played
     'PrintAA(episode)
 
     while true

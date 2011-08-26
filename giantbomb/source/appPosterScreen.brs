@@ -28,7 +28,7 @@ End Function
 
 '******************************************************
 '** Display the home screen and wait for events from
-'** the screen. The screen will show retreiving while
+'** the screen. The screen will show retrieving while
 '** we fetch and parse the feeds for the game posters
 '******************************************************
 Function showPosterScreen(screen As Object) As Integer
@@ -36,12 +36,12 @@ Function showPosterScreen(screen As Object) As Integer
     if validateParam(screen, "roPosterScreen", "showPosterScreen") = false return -1
 
     m.curCategory = 0
-    m.curShow     = 0
+    m.curShow = 0
 
     initCategoryList()
     categoryList = getCategoryList(m.Categories)
     screen.SetListNames(m.CategoryNames)
-    screen.SetContentList(getShowsForCategoryItem(categoryList[0]))
+    screen.SetContentList(getShowsForCategoryItem(categoryList[m.curCategory]))
     screen.Show()
 
     while true
@@ -50,18 +50,16 @@ Function showPosterScreen(screen As Object) As Integer
             print "showPosterScreen | msg = "; msg.GetMessage() " | index = "; msg.GetIndex()
             if msg.isListFocused() then
                 m.curCategory = msg.GetIndex()
-                m.curShow = 0
                 'get the list of shows for the currently selected item
-                screen.SetFocusedListItem(m.curShow)
                 screen.SetContentList(getShowsForCategoryItem(categoryList[msg.GetIndex()]))
+                screen.SetFocusedListItem(0)
                 print "list focused | current category = "; msg.GetIndex()
             else if msg.isListItemFocused() then
-                print"list item focused | current show = "; msg.GetIndex()
+                print "list item focused | current show = "; msg.GetIndex()
             else if msg.isListItemSelected() then
-                m.curShow = msg.GetIndex()
-                print "list item selected | current show = "; m.curShow
-                displayShowDetailScreen(categoryList[m.curCategory], m.curShow)
-                screen.SetFocusedListItem(m.curShow)
+                print "list item selected | current show = "; msg.GetIndex()
+                m.curShow = displayShowDetailScreen(categoryList[m.curCategory], msg.GetIndex())
+                screen.setFocusedListItem(m.curShow)
             else if msg.isScreenClosed() then
                 return -1
             end if
@@ -99,7 +97,7 @@ Function getCategoryList(categories as Object) As Object
 
     if validateParam(categories, "roAssociativeArray", "getCategoryList") = false return invalid
 
-    categoryList = CreateObject("roArray", 100, true)
+    categoryList = CreateObject("roArray", 20, true)
     for each category in categories.kids
         categoryList.Push(category)
     next
