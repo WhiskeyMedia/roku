@@ -71,8 +71,8 @@ Function showPosterScreen(screen As Object) As Integer
 
         if load_category = true and type(msg) = "Invalid" then
             'get the list of shows for the currently selected item
-            screen.SetContentList(getShowsForCategoryItem(categoryList[m.curCategory]))
             screen.SetFocusedListItem(m.curShow)
+            screen.SetContentList(getShowsForCategoryItem(categoryList[m.curCategory]))
             load_category = false
         end if
 
