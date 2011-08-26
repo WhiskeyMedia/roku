@@ -44,26 +44,38 @@ Function showPosterScreen(screen As Object) As Integer
     screen.SetContentList(getShowsForCategoryItem(categoryList[m.curCategory]))
     screen.Show()
 
+    load_category = false
     while true
-        msg = wait(0, screen.GetMessagePort())
+        msg = wait(1000, screen.GetMessagePort())
         if type(msg) = "roPosterScreenEvent" then
             print "showPosterScreen | msg = "; msg.GetMessage() " | index = "; msg.GetIndex()
             if msg.isListFocused() then
                 m.curCategory = msg.GetIndex()
-                'get the list of shows for the currently selected item
-                screen.SetContentList(getShowsForCategoryItem(categoryList[msg.GetIndex()]))
-                screen.SetFocusedListItem(0)
+                m.curShow = 0
+                empty_list = CreateObject("roArray", 0, true)
+                screen.SetContentList(empty_list)
+                screen.ShowMessage("retrieving...")
+                load_category = true
                 print "list focused | current category = "; msg.GetIndex()
             else if msg.isListItemFocused() then
                 print "list item focused | current show = "; msg.GetIndex()
             else if msg.isListItemSelected() then
-                print "list item selected | current show = "; msg.GetIndex()
-                m.curShow = displayShowDetailScreen(categoryList[m.curCategory], msg.GetIndex())
+                m.curShow = msg.GetIndex()
+                print "list item selected | current show = "; m.curShow
+                m.curShow = displayShowDetailScreen(categoryList[m.curCategory], m.curShow)
                 screen.setFocusedListItem(m.curShow)
             else if msg.isScreenClosed() then
                 return -1
             end if
-        end If
+        end if
+
+        if load_category = true and type(msg) = "Invalid" then
+            'get the list of shows for the currently selected item
+            screen.SetContentList(getShowsForCategoryItem(categoryList[m.curCategory]))
+            screen.SetFocusedListItem(m.curShow)
+            load_category = false
+        end if
+
     end while
 
 End Function
