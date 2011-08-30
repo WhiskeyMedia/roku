@@ -41,8 +41,8 @@ Function showPosterScreen(screen As Object) As Integer
     initCategoryList()
     categoryList = getCategoryList(m.Categories)
     screen.SetListNames(m.CategoryNames)
-    m.showList = getShowsForCategoryItem(categoryList[m.curCategory])
-    screen.SetContentList(m.showList)
+    showList = getShowsForCategoryItem(categoryList[m.curCategory])
+    screen.SetContentList(showList)
     screen.Show()
 
     load_category = false
@@ -63,7 +63,7 @@ Function showPosterScreen(screen As Object) As Integer
             else if msg.isListItemSelected() then
                 m.curShow = msg.GetIndex()
                 print "list item selected | current show = "; m.curShow
-                m.curShow = displayShowDetailScreen(categoryList[m.curCategory], m.curShow, m.showList)
+                m.curShow = displayShowDetailScreen(categoryList[m.curCategory], m.curShow, showList)
                 screen.setFocusedListItem(m.curShow)
             else if msg.isScreenClosed() then
                 return -1
@@ -73,8 +73,8 @@ Function showPosterScreen(screen As Object) As Integer
         if load_category = true and type(msg) = "Invalid" then
             'get the list of shows for the currently selected item
             screen.SetFocusedListItem(m.curShow)
-            m.showList = getShowsForCategoryItem(categoryList[m.curCategory])
-            screen.SetContentList(m.showList)
+            showList = getShowsForCategoryItem(categoryList[m.curCategory])
+            screen.SetContentList(showList)
             load_category = false
         end if
 
