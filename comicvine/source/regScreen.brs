@@ -32,11 +32,6 @@ Function doRegistration() As Integer
         return 0
     endif
 
-    if skip() then
-        print "skipping registration this session"
-        return 0
-    endif
-
     regscreen = displayRegistrationScreen()
 
     'main loop get a new registration code, display it and check to see if its been linked
@@ -84,10 +79,7 @@ Function doRegistration() As Integer
                             getNewCode = true
                             exit while
                         endif
-                        if msg.GetIndex() = 1
-                            m.skip = true
-                            return 1
-                        endif
+                        if msg.GetIndex() = 1 return 1
                     endif
                 endif
             end while
@@ -305,13 +297,6 @@ Function isLinked() As Dynamic
     return false
 End Function
 
-Function skip() As Boolean
-    if m.skip = true then
-        return true
-    else
-        return false
-    endif
-End Function
 
 '******************************************************
 'Show congratulations screen
