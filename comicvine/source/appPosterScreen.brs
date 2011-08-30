@@ -62,7 +62,7 @@ Function showPosterScreen(screen As Object) As Integer
             else if msg.isListItemSelected() then
                 m.curShow = msg.GetIndex()
                 print "list item selected | current show = "; m.curShow
-                m.curShow = displayShowDetailScreen(categoryList[m.curCategory], m.curShow)
+                m.curShow = displayShowDetailScreen(categoryList[m.curCategory], m.curShow, m.showList)
                 screen.setFocusedListItem(m.curShow)
             else if msg.isScreenClosed() then
                 return -1
@@ -72,7 +72,8 @@ Function showPosterScreen(screen As Object) As Integer
         if load_category = true and type(msg) = "Invalid" then
             'get the list of shows for the currently selected item
             screen.SetFocusedListItem(m.curShow)
-            screen.SetContentList(getShowsForCategoryItem(categoryList[m.curCategory]))
+            m.showList = getShowsForCategoryItem(categoryList[m.curCategory])
+            screen.SetContentList(m.showList)
             load_category = false
         end if
 
@@ -87,13 +88,12 @@ End Function
 '** data for the selected show.  This data should be
 '** sufficient for the show detail (springboard) to display
 '**********************************************************
-Function displayShowDetailScreen(category as Object, showIndex as Integer) As Integer
+Function displayShowDetailScreen(category as Object, showIndex as Integer, showList as Object) As Integer
 
     if validateParam(category, "roAssociativeArray", "displayShowDetailScreen") = false return -1
 
-    shows = getShowsForCategoryItem(category)
     screen = preShowDetailScreen(category.Title)
-    showIndex = showDetailScreen(screen, shows, showIndex)
+    showIndex = showDetailScreen(screen, showList, showIndex)
 
     return showIndex
 

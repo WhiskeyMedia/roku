@@ -13,12 +13,12 @@ Function InitCategoryFeedConnection() As Object
     m.api_key = loadRegistrationToken()
     if len(m.api_key) = 0 then
         'Use default API key
-        m.api_key = "59e6a05db7ba7939e828d3fe24062d373cb76b57"
+        m.api_key = "309bb168323f74cb2fcc48bb721577e0a3d0e983"
     endif
 
     conn = CreateObject("roAssociativeArray")
 
-    conn.UrlPrefix = "http://api.giantbomb.com"
+    conn.UrlPrefix = "http://api.comicvine.com"
     m.UrlPrefix = conn.UrlPrefix
     conn.UrlCategoryFeed = conn.UrlPrefix + "/video_types/?api_key=" + m.api_key
 

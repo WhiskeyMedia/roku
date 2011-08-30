@@ -20,7 +20,7 @@ Function InitShowFeedConnection(category As Object) As Object
     m.api_key = loadRegistrationToken()
     if len(m.api_key) = 0 then
         'Use default API key
-        m.api_key = "59e6a05db7ba7939e828d3fe24062d373cb76b57"
+        m.api_key = "309bb168323f74cb2fcc48bb721577e0a3d0e983"
     endif
 
     conn = CreateObject("roAssociativeArray")
@@ -127,7 +127,7 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
     api_key = loadRegistrationToken()
     if len(api_key) = 0 then
         'Use default API key
-        api_key = "59e6a05db7ba7939e828d3fe24062d373cb76b57"
+        api_key = "309bb168323f74cb2fcc48bb721577e0a3d0e983"
     endif
 
     for each curShow in showList
