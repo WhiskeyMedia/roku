@@ -36,8 +36,6 @@ Function showDetailScreen(screen As Object, showList As Object, showIndex as Int
     remoteKeyLeft  = 4
     remoteKeyRight = 5
 
-    doRegistration()
-
     while true
         msg = wait(0, screen.GetMessagePort())
 
@@ -75,6 +73,7 @@ Function showDetailScreen(screen As Object, showList As Object, showIndex as Int
                     refreshShowDetail(screen, showList, showIndex)
                 endif
                 if msg.GetIndex() = 3
+                    doRegistration()
                 endif
                 print "Button pressed: "; msg.GetIndex(); " " msg.GetData()
             end if
@@ -113,6 +112,9 @@ Function refreshShowDetail(screen As Object, showList As Object, showIndex as In
         screen.AddButton(2, "play from beginning")
     else
         screen.AddButton(2, "play")
+    endif
+    if not isLinked() then
+        screen.AddButton(3, "link account")
     endif
 
     screen.SetContent(show)

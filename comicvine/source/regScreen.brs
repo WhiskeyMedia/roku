@@ -122,7 +122,7 @@ Function displayRegistrationScreen() As Object
     regscreen.SetRegistrationCode("retrieving code...")
     regscreen.AddParagraph("This screen will automatically update as soon as your activation completes")
     regscreen.AddButton(0, "Get a new code")
-    regscreen.AddButton(1, "Skip for now")
+    regscreen.AddButton(1, "Back")
     regscreen.Show()
 
     return regscreen

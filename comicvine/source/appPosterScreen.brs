@@ -41,7 +41,8 @@ Function showPosterScreen(screen As Object) As Integer
     initCategoryList()
     categoryList = getCategoryList(m.Categories)
     screen.SetListNames(m.CategoryNames)
-    screen.SetContentList(getShowsForCategoryItem(categoryList[m.curCategory]))
+    m.showList = getShowsForCategoryItem(categoryList[m.curCategory])
+    screen.SetContentList(m.showList)
     screen.Show()
 
     load_category = false
