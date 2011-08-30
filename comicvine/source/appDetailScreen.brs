@@ -113,6 +113,7 @@ Function refreshShowDetail(screen As Object, showList As Object, showIndex as In
     else
         screen.AddButton(2, "play")
     endif
+    m.RegToken = loadRegistrationToken()
     if not isLinked() then
         screen.AddButton(3, "link account")
     endif
