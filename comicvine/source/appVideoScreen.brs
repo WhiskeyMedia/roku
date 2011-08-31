@@ -20,7 +20,7 @@ Function showVideoScreen(episode As Object)
         return -1
     endif
 
-    if episode.isHD = true then
+    if episode.isHD = true and instr(1, episode.streamurls[0], "smedia") = 0 then
         hd_url = strReplace(episode.streamurls[0], "download=1", "format=xml")
         hd_http = NewHttp(hd_url)
         hd_rsp = hd_http.GetToStringWithRetry()
@@ -68,4 +68,3 @@ Function showVideoScreen(episode As Object)
     end while
 
 End Function
-

@@ -21,10 +21,10 @@ Function doRegistration() As Integer
    'Failure case: getRegResult_failure (always returns failure)
    'Success case: getRegResult_success (always returns success)
 
-    m.UrlBase         = "http://www.comicvine.com/roku"
+    m.UrlBase         = "http://www.giantbomb.com/roku"
     m.UrlGetRegCode   = m.UrlBase + "/get-code"
     m.UrlGetRegResult = m.UrlBase + "/get-result"
-    m.UrlWebSite      = "www.comicvine.com/roku"
+    m.UrlWebSite      = "www.giantbomb.com/roku"
 
     m.RegToken = loadRegistrationToken()
     if isLinked() then
@@ -113,8 +113,8 @@ Function displayRegistrationScreen() As Object
     regscreen.AddFocalText("and enter this code to activate:", "spacing-dense")
     regscreen.SetRegistrationCode("retrieving code...")
     regscreen.AddParagraph("This screen will automatically update as soon as your activation completes.")
-    regscreen.AddButton(0, "Get a new code")
-    regscreen.AddButton(1, "Back")
+    regscreen.AddButton(0, "get a new code")
+    regscreen.AddButton(1, "back")
     regscreen.Show()
 
     return regscreen
@@ -307,7 +307,7 @@ Sub showCongratulationsScreen()
     screen.SetMessagePort(port)
 
     screen.AddHeaderText("Congratulations!")
-    screen.AddParagraph("You have successfully linked your Roku player to your account")
+    screen.AddParagraph("You have successfully linked your Roku player to your account.")
     screen.AddParagraph("Select 'start' to begin.")
     screen.AddButton(1, "start")
     screen.Show()

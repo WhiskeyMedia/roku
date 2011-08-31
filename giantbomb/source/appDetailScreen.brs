@@ -65,12 +65,10 @@ Function showDetailScreen(screen As Object, showList As Object, showIndex as Int
                         showList[showIndex].PlayStart = PlayStart.ToInt()
                     endif
                     showVideoScreen(showList[showIndex])
-                    refreshShowDetail(screen, showList, showIndex)
                 endif
                 if msg.GetIndex() = 2
                     showList[showIndex].PlayStart = 0
                     showVideoScreen(showList[showIndex])
-                    refreshShowDetail(screen, showList, showIndex)
                 endif
                 if msg.GetIndex() = 3
                     doRegistration()
@@ -106,16 +104,10 @@ Function refreshShowDetail(screen As Object, showList As Object, showIndex as In
     'PrintAA(show)
 
     screen.ClearButtons()
-    PlayStart = RegRead(showList[showIndex].ContentId)
-    if PlayStart <> invalid then
-        screen.AddButton(1, "resume playing")
-        screen.AddButton(2, "play from beginning")
-    else
-        screen.AddButton(2, "play")
-    endif
+    screen.AddButton(2, "play")
     m.RegToken = loadRegistrationToken()
     if not isLinked() then
-        screen.AddButton(3, "link account")
+        screen.AddButton(3, "link account for HD (subscription required)")
     endif
 
     screen.SetContent(show)

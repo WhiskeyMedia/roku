@@ -113,8 +113,8 @@ Function displayRegistrationScreen() As Object
     regscreen.AddFocalText("and enter this code to activate:", "spacing-dense")
     regscreen.SetRegistrationCode("retrieving code...")
     regscreen.AddParagraph("This screen will automatically update as soon as your activation completes.")
-    regscreen.AddButton(0, "Get a new code")
-    regscreen.AddButton(1, "Back")
+    regscreen.AddButton(0, "get a new code")
+    regscreen.AddButton(1, "back")
     regscreen.Show()
 
     return regscreen
@@ -307,7 +307,7 @@ Sub showCongratulationsScreen()
     screen.SetMessagePort(port)
 
     screen.AddHeaderText("Congratulations!")
-    screen.AddParagraph("You have successfully linked your Roku player to your account")
+    screen.AddParagraph("You have successfully linked your Roku player to your account.")
     screen.AddParagraph("Select 'start' to begin.")
     screen.AddButton(1, "start")
     screen.Show()
