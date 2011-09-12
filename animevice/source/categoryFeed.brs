@@ -13,12 +13,12 @@ Function InitCategoryFeedConnection() As Object
     m.api_key = loadRegistrationToken()
     if len(m.api_key) = 0 then
         'Use default API key
-        m.api_key = "4eac034cacb290fba9a5335f1e34e298d2a0d07b"
+        m.api_key = "0ada3036d1cf0ee0e52fb83ba8a06f3aac967243"
     endif
 
     conn = CreateObject("roAssociativeArray")
 
-    conn.UrlPrefix = "http://api.screened.com"
+    conn.UrlPrefix = "http://api.animevice.com"
     m.UrlPrefix = conn.UrlPrefix
     conn.UrlCategoryFeed = conn.UrlPrefix + "/video_types/?api_key=" + m.api_key
 
