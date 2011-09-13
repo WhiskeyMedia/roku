@@ -107,7 +107,7 @@ Function refreshShowDetail(screen As Object, showList As Object, showIndex as In
     screen.AddButton(2, "play")
     m.RegToken = loadRegistrationToken()
     if not isLinked() then
-        screen.AddButton(3, "link account for HD (subscription required)")
+        screen.AddButton(3, "link account for HD (premium)")
     endif
 
     screen.SetContent(show)
