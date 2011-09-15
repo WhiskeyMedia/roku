@@ -228,7 +228,7 @@ Function checkRegistrationStatus(sn As String, regCode As String) As Integer
                     if token <> "" and token <> invalid then
                         print "obtained registration token: " + validstr(token)
                         saveRegistrationToken(token) 'commit it
-                        m.RegistrationToken = token
+                        m.RegToken = token
                         showCongratulationsScreen()
                         return 0
                     else
@@ -310,6 +310,11 @@ Sub showCongratulationsScreen()
     screen.AddParagraph("You have successfully linked your Roku player to your account.")
     screen.AddParagraph("Select 'start' to begin.")
     screen.AddButton(1, "start")
+
+    initCategoryList()
+    categoryList = getCategoryList(m.Categories)
+    m.newShowList = getShowsForCategoryItem(categoryList[m.curCategory])
+
     screen.Show()
 
     while true

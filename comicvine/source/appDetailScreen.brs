@@ -72,6 +72,8 @@ Function showDetailScreen(screen As Object, showList As Object, showIndex as Int
                 endif
                 if msg.GetIndex() = 3
                     doRegistration()
+                    showList = m.newShowList
+                    refreshShowDetail(screen, showList, showIndex)
                 endif
                 print "Button pressed: "; msg.GetIndex(); " " msg.GetData()
             end if
