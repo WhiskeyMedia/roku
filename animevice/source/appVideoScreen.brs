@@ -34,7 +34,7 @@ Function showVideoScreen(episode As Object)
     screen.SetMessagePort(port)
 
     screen.Show()
-    screen.SetPositionNotificationPeriod(30)
+    screen.SetPositionNotificationPeriod(5)
 
     screen.SetContent(episode)
     screen.Show()

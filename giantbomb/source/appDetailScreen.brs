@@ -58,7 +58,6 @@ Function showDetailScreen(screen As Object, showList As Object, showIndex as Int
                 endif
             else if msg.isButtonPressed()
                 print "ButtonPressed"
-                print "ButtonPressed"
                 if msg.GetIndex() = 1
                     PlayStart = RegRead(showList[showIndex].ContentId)
                     if PlayStart <> invalid then
@@ -73,8 +72,8 @@ Function showDetailScreen(screen As Object, showList As Object, showIndex as Int
                 if msg.GetIndex() = 3
                     doRegistration()
                     showList = m.newShowList
-                    refreshShowDetail(screen, showList, showIndex)
                 endif
+                refreshShowDetail(screen, showList, showIndex)
                 print "Button pressed: "; msg.GetIndex(); " " msg.GetData()
             end if
         else
@@ -106,7 +105,14 @@ Function refreshShowDetail(screen As Object, showList As Object, showIndex as In
     'PrintAA(show)
 
     screen.ClearButtons()
-    screen.AddButton(2, "play")
+    PlayStart = RegRead(showList[showIndex].ContentId)
+    if PlayStart <> invalid then
+        screen.AddButton(1, "resume")
+        screen.AddButton(2, "play from beginning")
+    else
+        screen.AddButton(2, "play")
+    endif
+
     m.RegToken = loadRegistrationToken()
     if not isLinked() then
         screen.AddButton(3, "link account for HD (premium)")
