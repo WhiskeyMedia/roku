@@ -21,10 +21,10 @@ Function doRegistration() As Integer
    'Failure case: getRegResult_failure (always returns failure)
    'Success case: getRegResult_success (always returns success)
 
-    m.UrlBase         = "http://www.screened.com/roku"
+    m.UrlBase         = "http://www.tested.com/roku"
     m.UrlGetRegCode   = m.UrlBase + "/get-code"
     m.UrlGetRegResult = m.UrlBase + "/get-result"
-    m.UrlWebSite      = "www.screened.com/roku"
+    m.UrlWebSite      = "www.tested.com/roku"
 
     m.RegToken = loadRegistrationToken()
     if isLinked() then
