@@ -174,7 +174,7 @@ Function parse_show_feed(xml As Object, feed As Object) As Void
         item.HDPosterUrl           = item.hdImg
         item.SDPosterUrl           = item.sdImg
 
-        'item.Length = strtoi(item.Runtime)
+        item.Length = validstr(curShow.length_seconds.GetText())
         'item.Categories = CreateObject("roArray", 5, true)
         'item.Categories.Push(item.Genre)
         'item.Actors = CreateObject("roArray", 5, true)
