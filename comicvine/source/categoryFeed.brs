@@ -150,7 +150,7 @@ Function MakeLatestCategory() As dynamic
     o.Description = "See all our latest stuff."
     o.ShortDescriptionLine1 = "Latest"
     o.ShortDescriptionLine2 = "See all our latest stuff."
-    o.Feed = m.UrlPrefix + "/videos/?api_key=" + m.api_key + "&sort=-publish_date&field_list=name,deck,id,image,low_url,high_url,hd_url,publish_date"
+    o.Feed = m.UrlPrefix + "/videos/?api_key=" + m.api_key + "&sort=-publish_date&field_list=name,deck,id,image,length_seconds,low_url,high_url,hd_url,publish_date"
     o.Type = "normal"
 
     return o
