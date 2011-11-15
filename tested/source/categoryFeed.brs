@@ -177,7 +177,7 @@ Function ParseCategoryNode(xml As Object) As dynamic
         o.Description = xml.deck.gettext()
         o.ShortDescriptionLine1 = xml.name.gettext()
         o.ShortDescriptionLine2 = xml.deck.gettext()
-        o.Feed = m.UrlPrefix + "/videos/?api_key=" + m.api_key + "&video_type=" + xml.id.gettext() + "&sort=-publish_date&field_list=name,deck,id,image,low_url,high_url,hd_url,publish_date"
+        o.Feed = m.UrlPrefix + "/videos/?api_key=" + m.api_key + "&video_type=" + xml.id.gettext() + "&sort=-publish_date&field_list=name,deck,id,image,length_seconds,low_url,high_url,hd_url,publish_date"
         'o.SDPosterURL = xml@sd_img
         'o.HDPosterURL = xml@hd_img
     elseif xml.GetName() = "categoryLeaf" then
